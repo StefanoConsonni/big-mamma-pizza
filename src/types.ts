@@ -21,3 +21,9 @@ export type TPizza = {
   soldOut: boolean;
   imageUrl: string;
 };
+
+export type TOrderItem = {
+  item: TItem;
+  isLoadingIngredients: boolean;
+  ingredients: string[];
+};
