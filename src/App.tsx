@@ -6,7 +6,7 @@ import Menu from "./features/menu/Menu";
 import Cart from "./features/cart/Cart";
 import CreateOrder from "./features/order/CreateOrder";
 import Order from "./features/order/Order";
-import { menuLoader } from "./utils/functions";
+import { menuLoader, orderLoader } from "./utils/functions";
 import "./app.css";
 
 const router = createBrowserRouter([
@@ -35,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/order/:orderId",
         element: <Order />,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        loader: orderLoader,
+        errorElement: <Error />,
       },
     ],
   },
