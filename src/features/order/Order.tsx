@@ -1,16 +1,7 @@
 // Test ID: IIDSAT
 import { useLoaderData } from "react-router";
 import { calcMinutesLeft, formatCurrency, formatDate } from "../../utils/helpers";
-
-export type TOrder = {
-  id: string;
-  status: string;
-  priority: string;
-  priorityPrice: number;
-  orderPrice: number;
-  estimatedDelivery: string;
-  cart: unknown;
-};
+import { TOrder } from "../../types";
 
 function Order() {
   const order = useLoaderData() as TOrder;

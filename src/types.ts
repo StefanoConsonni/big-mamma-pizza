@@ -27,3 +27,13 @@ export type TOrderItem = {
   isLoadingIngredients: boolean;
   ingredients: string[];
 };
+
+export type TOrder = {
+  id: string;
+  status: string;
+  priority: string;
+  priorityPrice: number;
+  orderPrice: number;
+  estimatedDelivery: string;
+  cart: unknown;
+};
