@@ -1,31 +1,38 @@
-import { redirect } from "react-router";
+import { ActionFunction, redirect } from "react-router";
 import { createOrder, getMenu, getOrder } from "../services/apiRestaurant";
 import { TPizza } from "../types";
+
+// https://uibakery.io/regex-library/phone-number
+const isValidPhone = (str: string): boolean =>
+    /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str);
 
 export async function menuLoader(): Promise<TPizza[]> {
   return await getMenu();
 }
 
-export async function orderLoader({ params }: { params: { orderId: string } }): Promise<TPizza[]> {
-  const order = await getOrder(params.orderId);
+export const orderLoader: ActionFunction = async ({ params }) => {
+  const order = await getOrder(params.orderId as string);
   return order;
-}
+};
 
-export async function createOrderAction({
-  request,
-}: {
-  request: {
-    formData: () => Iterable<readonly [PropertyKey, string]>;
-  };
-}) {
+export const createOrderAction: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
 
   const order = {
     ...data,
-    cart: JSON.parse(data.cart),
+    cart: JSON.parse(data.cart as string),
     priority: data.priority === "on",
   };
+
+  const errors = {};
+  if(!isValidPhone(order.phone)) {
+    errors.phone = "Please give us your correct phone number. We might need it to contact you";
+  }
+  if(Object.keys(errors).length > 0) {
+    return errors
+  }
   const newOrder = await createOrder(order);
+
   return redirect(`/order/${newOrder.id}`);
-}
+};

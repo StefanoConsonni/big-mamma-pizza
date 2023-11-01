@@ -31,15 +31,11 @@ const router = createBrowserRouter([
       {
         path: "/order/new",
         element: <CreateOrder />,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         action: createOrderAction,
       },
       {
         path: "/order/:orderId",
         element: <Order />,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         loader: orderLoader,
         errorElement: <Error />,
       },
