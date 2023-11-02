@@ -18,6 +18,7 @@ export const orderLoader: ActionFunction = async ({ params }) => {
 export const createOrderAction: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
+  console.log(data);
 
   const order = {
     ...data,
@@ -26,8 +27,10 @@ export const createOrderAction: ActionFunction = async ({ request }) => {
   };
 
   const errors = {};
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   if(!isValidPhone(order.phone)) {
-    errors.phone = "Please give us your correct phone number. We might need it to contact you";
+    (errors as {phone: string}).phone = "Please give us your correct phone number. We might need it to contact you";
   }
   if(Object.keys(errors).length > 0) {
     return errors
